@@ -2,20 +2,16 @@ import os
 import pandas as pd
 import folium
 from flask import Flask, render_template
+from werkzeug.wrappers import Response
+from werkzeug.middleware.dispatcher import DispatcherMiddleware
 
-app = Flask(__name__)
+BASE_PATH = '/app/FEWSC'
+app = Flask(__name__, static_url_path=f'{BASE_PATH}/static')
+app.config['APPLICATION_ROOT'] = BASE_PATH
 
-# Hardcoded FSDH Prefix Fix
-class FSDHProxyPrefixFix:
-    def __init__(self, wsgi_app):
-        self.wsgi_app = wsgi_app
-
-    def __call__(self, environ, start_response):
-        # Force Flask to prefix every url_for() path with /app/FEWSC
-        environ["SCRIPT_NAME"] = "/app/FEWSC"
-        return self.wsgi_app(environ, start_response)
-
-app.wsgi_app = FSDHProxyPrefixFix(app.wsgi_app)
+app.wsgi_app = DispatcherMiddleware(Response('Not Found', status=404), {
+    BASE_PATH: app.wsgi_app
+})
 
 # Blobbin
 # Add AzCopy Here vvvvv
