@@ -60,6 +60,8 @@ function selectZone(zoneCode) {
 
 // Update bottom snapshot details and individual charts for an individual seal (Index Selection)
 function selectSeal(seal) {
+    if (!seal) return;
+
     const detailIdEl = document.getElementById('detail-id');
     if (detailIdEl) detailIdEl.innerText = seal.id;
     
@@ -73,18 +75,18 @@ function selectSeal(seal) {
     if (detailAgeEl) detailAgeEl.innerText = seal.age;
 
     const detailLocEl = document.getElementById('detail-location');
-    if (detailLocEl) detailLocEl.innerText = seal.area;
+    if (detailLocEl) detailLocEl.innerText = seal.area || seal.nafo_zone || '-';
 
     const detailMealEl = document.getElementById('detail-meal');
     if (detailMealEl) detailMealEl.innerText = seal.meal;
 
     const preyVisual = document.getElementById('prey-visual');
-    if (preyVisual) {
+    if (preyVisual && seal.otolith) {
         const scale = Math.min(Math.max(seal.otolith * 0.4, 0.5), 3.0);
         preyVisual.style.transform = `scale(${scale})`;
     }
 
-    updateDetailStomachChart(seal.prey_contents, seal.total_prey_items);
+    updateDetailStomachChart(seal.prey_contents || {}, seal.total_prey_items || 0);
 }
 
 // Start application
@@ -92,17 +94,22 @@ function init() {
     renderInterface();
     populateFilters();
 
-    if (typeof sealsData !== 'undefined' && sealsData.length > 0) {
+    // Auto-select initial elements on load once layout has completely stabilized
+    if (typeof sealsData !== 'undefined' && Array.isArray(sealsData) && sealsData.length > 0) {
         setTimeout(() => {
-            // Find unique NAFO zones and sort them to grab the first one
-            const zones = [...new Set(sealsData.map(s => s.nafo_zone).filter(Boolean))].sort();
-            if (zones.length > 0) {
-                selectZone(zones[0]);
+            try {
+                // Determine first available NAFO zone dynamically
+                const zones = [...new Set(sealsData.map(s => s.nafo_zone).filter(Boolean))].sort();
+                if (zones.length > 0) {
+                    selectZone(zones[0]);
+                }
+                
+                // Select first individual seal profile 
+                selectSeal(sealsData[0]);
+            } catch (err) {
+                console.warn("Auto-selection could not render fully on start:", err);
             }
-            
-            // Auto-select the first individual seal from our list
-            selectSeal(sealsData[0]);
-        }, 50); // Small 50ms delay lets browser rendering cycle stabilize
+        }, 150); // Gives ample layout calculation headroom
     }
 }
 
