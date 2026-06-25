@@ -17,8 +17,7 @@ class FSDHProxyPrefixFix:
 
 app.wsgi_app = FSDHProxyPrefixFix(app.wsgi_app)
 
-# Blobbin
-# Add AzCopy Here vvvvv
+# Azure SAS variables and File Names
 AZURE_SAS_URI = os.environ.get("SAS")
 SEALS_BLOB_NAME = "FSDHstatic/OPENDATA_HarpDietData2017-2021_EN.csv"
 NAFO_BLOB_NAME = "FSDHstatic/NAFO-Subdivision-General-Coordinates.csv"
@@ -76,17 +75,15 @@ def load_nafo_reference():
         
         nafo_map = {}
         if div_col and lat_col and lon_col:
-            grouped = df.groupby(div_col)
-            for div_val, group in grouped:
-                div_clean = str(div_val).strip().upper()
-                try:
-                    lat_val = float(group[lat_col].mean())
-                    lon_val = float(group[lon_col].mean())
-                except:
-                    continue
-                    
-                name_val = f"{div_clean} (NAFO)"
-                nafo_map[div_clean] = (lat_val, lon_val, name_val)
+            # Safely cast coordinates to float
+            df[lat_col] = pd.to_numeric(df[lat_col], errors='coerce')
+            df[lon_col] = pd.to_numeric(df[lon_col], errors='coerce')
+            df = df.dropna(subset=[lat_col, lon_col])
+            
+            # Direct mapping (one row per NAFO code, no groupby or mean calculation required)
+            for _, row in df.iterrows():
+                div_clean = str(row[div_col]).strip().upper()
+                nafo_map[div_clean] = (float(row[lat_col]), float(row[lon_col]), f"{div_clean} (NAFO)")
             
         return nafo_map
     except Exception as e:
@@ -94,16 +91,15 @@ def load_nafo_reference():
         return {}
 
 def parse_seals_csv():
-    # Load NAFO Divisions reference file and compute centroids
-    nafo_map = load_nafo_reference()
-    
+    # Load NAFO Divisions reference file (directly maps zone to precalculated coordinates)
+    nafo_map = load_nafo_reference() 
     
     # Try loading from Azure Storage first
     df = load_df_from_azure(
         blob_name=SEALS_BLOB_NAME
     )
     
-    # If Azure loading fails, return an empty list
+    # If Azure loading fails, return an empty list (ERROR)
     if df is None:
         print("[DEBUG] Azure load failed for seals CSV. Returning empty dataset.")
         return []
@@ -111,7 +107,7 @@ def parse_seals_csv():
     df.columns = [c.strip() for c in df.columns]
 
     id_col = find_col(df, ['sealid'])
-    sex_col = find_col(df, ['sex'])
+    gen_col = find_col(df, ['gen'])
     age_col = find_col(df, ['age'])
     nafo_col = find_col(df, ['nafo'])
     prey_col = find_col(df, ['prey'])
@@ -126,13 +122,13 @@ def parse_seals_csv():
     seals_list = []
     
     for seal_id, group in grouped:
-        sex = 'U'
-        if sex_col:
-            raw_sex = group[sex_col].iloc[0]
-            if not pd.isna(raw_sex) and str(raw_sex).strip():
-                sex = str(raw_sex).strip().upper()[0]
-                if sex not in ['M', 'F']:
-                    sex = 'U'
+        gen = 'U'
+        if gen_col:
+            raw_gen = group[gen_col].iloc[0]
+            if not pd.isna(raw_gen) and str(raw_gen).strip():
+                gen = str(raw_gen).strip().upper()[0]
+                if gen not in ['M', 'F']:
+                    gen = 'U'
                     
         age_display = 'Unknown'
         age_num = None
@@ -151,37 +147,12 @@ def parse_seals_csv():
             if not pd.isna(raw_nafo) and str(raw_nafo).strip():
                 nafo = str(raw_nafo).strip()
                 
-        # Default fallback to Newfoundland and Labrador centroid (instead of Ottawa)
+        # Default fallback to Newfoundland and Labrador centroid
         lat, lon, area_name = 50.5, -56.5, f"{nafo} (NAFO)"
         
         nafo_upper = nafo.upper()
-        nafo_clean = nafo_upper.replace('-', '').replace(' ', '')
-        if nafo_map:
-            # 1. Dash-free exact match check (3LB matches key 3L-B)
-            matched = False
-            for key, val in nafo_map.items():
-                key_clean = key.replace('-', '').replace(' ', '')
-                if nafo_clean == key_clean:
-                    lat, lon, area_name = val
-                    matched = True
-                    break
-                    
-            # 2. Dash-free prefix match (if code is 3LB and map has 3L)
-            if not matched:
-                for key, val in nafo_map.items():
-                    key_clean = key.replace('-', '').replace(' ', '')
-                    if nafo_clean.startswith(key_clean) or key_clean.startswith(nafo_clean):
-                        lat, lon, area_name = val
-                        matched = True
-                        break
-                        
-            # 3. Dash-free substring match
-            if not matched:
-                for key, val in nafo_map.items():
-                    key_clean = key.replace('-', '').replace(' ', '')
-                    if key_clean in nafo_clean or nafo_clean in key_clean:
-                        lat, lon, area_name = val
-                        break
+        if nafo_map and nafo_upper in nafo_map:
+            lat, lon, area_name = nafo_map[nafo_upper]
             
         prey_items = {}
         total_items = 0
@@ -208,37 +179,24 @@ def parse_seals_csv():
                         
                 prey_items[prey_name] = prey_items.get(prey_name, 0) + count
                 total_items += count
-                
+                 
         if not prey_items:
             prey_items['Empty'] = 1
             meal = "Empty"
         else:
             meal = max(prey_items, key=prey_items.get)
             
-        # Parse Otolith size mean
-        otolith_val = None
-        part_cols = [c for c in group.columns if 'partmeasur' in c.lower() or 'otolith' in c.lower() or 'size' in c.lower()]
-        if part_cols:
-            ot_col = part_cols[-1]
-            otolith_series = pd.to_numeric(group[ot_col], errors='coerce').dropna()
-            if not otolith_series.empty:
-                otolith_val = round(float(otolith_series.mean()), 2)
-                
-        if otolith_val is None or pd.isna(otolith_val):
-            otolith_val = 1.0
-            
         seals_list.append({
             "id": f"SEAL-{seal_id}",
             "raw_id": seal_id,
             "lat": lat,
             "lon": lon,
-            "gender": sex,
+            "gender": gen,
             "age": age_display,
             "age_num": age_num,
             "area": area_name,
             "nafo_zone": nafo,
             "meal": meal,
-            "otolith": otolith_val,
             "prey_contents": prey_items,
             "total_prey_items": total_items
         })
@@ -255,17 +213,20 @@ def home():
         m = folium.Map(location=[avg_lat, avg_lon], zoom_start=5, control_scale=True, world_copy_jump=True)
     else:
         m = folium.Map(location=[50.5, -56.5], zoom_start=5, control_scale=True, world_copy_jump=True)
-    
+
     # Generate the Azure SAS URL directly for the seal icon
     full_sas_uri = AZURE_SAS_URI
-    
-    if "?" in full_sas_uri: # is sas uri missing
+
+    if "?" in full_sas_uri:  # Formatting
         base_uri, token = full_sas_uri.split("?", 1)
         if not base_uri.endswith("/"):
             base_uri += "/"
         icon_url = f"{base_uri}{ICON_BLOB_NAME}?{token}"
     else:
-        icon_url = f"{full_sas_uri}/{ICON_BLOB_NAME}" if not full_sas_uri.endswith("/") else f"{full_sas_uri}{ICON_BLOB_NAME}"
+        if not full_sas_uri.endswith("/"):
+            icon_url = f"{full_sas_uri}/{ICON_BLOB_NAME}" 
+        else:
+            icon_url = f"{full_sas_uri}{ICON_BLOB_NAME}"
 
     # Group seals by NAFO zone to represent markers on the map
     nafo_groups = {}
@@ -328,21 +289,20 @@ def home():
             ">{zone}</div>
         </div>
         """
-        
         icon = folium.DivIcon(
             html=icon_html,
             icon_size=(size, size + 20),
             icon_anchor=(size / 2, size / 2)
         )
-        
         folium.Marker(
             location=[lat, lon],
             icon=icon,
             tooltip=f"{zone} Zone ({len(group)} seals)"
         ).add_to(m)
-        
+
     map_html = m._repr_html_()
     return render_template('index.html', map_html=map_html, seals_data=seals)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
