@@ -91,6 +91,19 @@ function selectSeal(seal) {
 function init() {
     renderInterface();
     populateFilters();
+
+    if (typeof sealsData !== 'undefined' && sealsData.length > 0) {
+        setTimeout(() => {
+            // Find unique NAFO zones and sort them to grab the first one
+            const zones = [...new Set(sealsData.map(s => s.nafo_zone).filter(Boolean))].sort();
+            if (zones.length > 0) {
+                selectZone(zones[0]);
+            }
+            
+            // Auto-select the first individual seal from our list
+            selectSeal(sealsData[0]);
+        }, 50); // Small 50ms delay lets browser rendering cycle stabilize
+    }
 }
 
 if (document.readyState === 'loading') {

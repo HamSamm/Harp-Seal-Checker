@@ -2,101 +2,108 @@
 function updateDemographicsChart(males, females, unknowns) {
     const ctx = document.getElementById('ratioChart');
     if (!ctx) return;
-    if (typeof Chart === 'undefined') return;
+
+    if (typeof Chart === 'undefined') {
+        return;
+    }
 
     if (ratioChartInstance) {
-        // Update data values and trigger the morph transition
-        ratioChartInstance.data.datasets[0].data = [males, females, unknowns];
-        ratioChartInstance.update(); 
-    } else {
-        // First-time creation
-        ratioChartInstance = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['Male', 'Female', 'Unknown'],
-                datasets: [{
-                    label: 'Seal Count',
-                    data: [males, females, unknowns],
-                    backgroundColor: [
-                        'rgba(54, 162, 235, 0.6)',
-                        'rgba(255, 99, 132, 0.6)',
-                        'rgba(153, 102, 255, 0.6)'
-                    ],
-                    borderColor: [
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(153, 102, 255, 1)'
-                    ],
-                    borderWidth: 1
-                }]
+        ratioChartInstance.destroy();
+    }
+
+    ratioChartInstance = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Male', 'Female', 'Unknown'],
+            datasets: [{
+                label: 'Seal Count',
+                data: [males, females, unknowns],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(153, 102, 255, 0.6)'
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(153, 102, 255, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: {
+                duration: 1000,
+                easing: 'easeOutQuart'
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                        labels: {
-                            boxWidth: 10,
-                            font: { size: 10 }
-                        }
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        boxWidth: 10,
+                        font: { size: 10 }
                     }
                 }
             }
-        });
-    }
+        }
+    });
 }
 
 // Draw age distribution as a Bar Chart
 function updateAgeChart(labels, counts) {
     const ctx = document.getElementById('ageChart');
     if (!ctx) return;
-    if (typeof Chart === 'undefined') return;
+
+    if (typeof Chart === 'undefined') {
+        return;
+    }
 
     if (ageChartInstance) {
-        // Update both labels and counts, then transition
-        ageChartInstance.data.labels = labels;
-        ageChartInstance.data.datasets[0].data = counts;
-        ageChartInstance.update(); 
-    } else {
-        // First-time creation
-        ageChartInstance = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Seals Count',
-                    data: counts,
-                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }]
+        ageChartInstance.destroy();
+    }
+
+    ageChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Seals Count',
+                data: counts,
+                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: {
+                duration: 1000,
+                easing: 'easeOutQuart'
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            precision: 0,
-                            font: { size: 9 }
-                        }
-                    },
-                    x: {
-                        ticks: {
-                            font: { size: 9 }
-                        }
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0,
+                        font: { size: 9 }
                     }
                 },
-                plugins: {
-                    legend: {
-                        display: false
+                x: {
+                    ticks: {
+                        font: { size: 9 }
                     }
                 }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
             }
-        });
-    }
+        }
+    });
 }
 
 // Update stomach content donut chart with changes to legend 
@@ -104,7 +111,14 @@ function updateStomachChart(preyContents, totalPreyItems) {
     const ctx = document.getElementById('stomachChart');
     const noteEl = document.getElementById('stomach-note');
     if (!ctx) return;
-    if (typeof Chart === 'undefined') return;
+
+    if (typeof Chart === 'undefined') {
+        return;
+    }
+
+    if (stomachChartInstance) {
+        stomachChartInstance.destroy();
+    }
 
     const preyItemsArray = Object.entries(preyContents).map(([label, value]) => ({ label, value }));
     preyItemsArray.sort((a, b) => b.value - a.value);
@@ -138,37 +152,31 @@ function updateStomachChart(preyContents, totalPreyItems) {
         return colors[idx % colors.length];
     });
 
-    if (stomachChartInstance) {
-        // Update all configuration targets dynamically
-        stomachChartInstance.data.labels = labels;
-        stomachChartInstance.data.datasets[0].data = data;
-        stomachChartInstance.data.datasets[0].backgroundColor = backgroundColors;
-        stomachChartInstance.data.datasets[0].borderColor = borderColors;
-        stomachChartInstance.update(); 
-    } else {
-        // First-time creation
-        stomachChartInstance = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: labels,
-                datasets: [{
-                    data: data,
-                    backgroundColor: backgroundColors,
-                    borderColor: borderColors,
-                    borderWidth: 1
-                }]
+    stomachChartInstance = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data,
+                backgroundColor: backgroundColors,
+                borderColor: borderColors,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: {
+                duration: 1000,
+                easing: 'easeOutQuart'
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
+            plugins: {
+                legend: {
+                    display: false
                 }
             }
-        });
-    }
+        }
+    });
 
     let legendContainer = document.getElementById('stomach-legend-container');
     if (!legendContainer) {
@@ -258,7 +266,14 @@ function updateDetailStomachChart(preyContents, totalPreyItems) {
     const ctx = document.getElementById('detailStomachChart');
     const noteEl = document.getElementById('detail-stomach-note');
     if (!ctx) return;
-    if (typeof Chart === 'undefined') return;
+
+    if (typeof Chart === 'undefined') {
+        return;
+    }
+
+    if (detailStomachChartInstance) {
+        detailStomachChartInstance.destroy();
+    }
 
     const preyItemsArray = Object.entries(preyContents).map(([label, value]) => ({ label, value }));
     preyItemsArray.sort((a, b) => b.value - a.value);
@@ -292,37 +307,31 @@ function updateDetailStomachChart(preyContents, totalPreyItems) {
         return colors[idx % colors.length];
     });
 
-    if (detailStomachChartInstance) {
-        // Update all configuration targets dynamically
-        detailStomachChartInstance.data.labels = labels;
-        detailStomachChartInstance.data.datasets[0].data = data;
-        detailStomachChartInstance.data.datasets[0].backgroundColor = backgroundColors;
-        detailStomachChartInstance.data.datasets[0].borderColor = borderColors;
-        detailStomachChartInstance.update(); 
-    } else {
-        // First-time creation
-        detailStomachChartInstance = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: labels,
-                datasets: [{
-                    data: data,
-                    backgroundColor: backgroundColors,
-                    borderColor: borderColors,
-                    borderWidth: 1
-                }]
+    detailStomachChartInstance = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data,
+                backgroundColor: backgroundColors,
+                borderColor: borderColors,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: {
+                duration: 1000,
+                easing: 'easeOutQuart'
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
+            plugins: {
+                legend: {
+                    display: false
                 }
             }
-        });
-    }
+        }
+    });
 
     let legendContainer = document.getElementById('detail-stomach-legend-container');
     if (!legendContainer) {
