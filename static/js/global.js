@@ -4,10 +4,16 @@ let ageChartInstance = null;
 let stomachChartInstance = null;
 let detailStomachChartInstance = null; // Individual card chart
 
-// Callback for the Folium map within the iframe
+// Callback for the Folium map within the iframe (traditional fallback)
 window.selectSealFromMap = function(zoneCode) {
     selectZone(zoneCode);
 };
+
+window.addEventListener('message', function(event) {
+    if (event.data && event.data.type === 'selectZone') {
+        selectZone(event.data.zone);
+    }
+});
 
 function getAgeDistribution(sealsList) {
     let maxAge = 0;

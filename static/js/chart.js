@@ -7,54 +7,49 @@ function updateDemographicsChart(males, females, unknowns) {
         return;
     }
 
-    const chartData = {
-        labels: ['Male', 'Female', 'Unknown'],
-        datasets: [{
-            label: 'Seal Count',
-            data: [males, females, unknowns],
-            backgroundColor: [
-                'rgba(54, 162, 235, 0.6)',
-                'rgba(255, 99, 132, 0.6)',
-                'rgba(153, 102, 255, 0.6)'
-            ],
-            borderColor: [
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 99, 132, 1)',
-                'rgba(153, 102, 255, 1)'
-            ],
-            borderWidth: 1
-        }]
-    };
-
     if (ratioChartInstance) {
-        // Dynamically update existing chart to morph dataset
-        ratioChartInstance.data = chartData;
-        ratioChartInstance.update();
-    } else {
-        // Create chart with debounce resize delay to prevent flexbox load interruption
-        ratioChartInstance = new Chart(ctx, {
-            type: 'pie',
-            data: chartData,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                resizeDelay: 150, // Delays resize detection to prevent initial rendering shift from canceling showing animations
-                animation: {
-                    duration: 1000,
-                    easing: 'easeOutQuart'
-                },
-                plugins: {
-                    legend: {
-                        position: 'top',
-                        labels: {
-                            boxWidth: 10,
-                            font: { size: 10 }
-                        }
+        ratioChartInstance.destroy();
+    }
+
+    ratioChartInstance = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Male', 'Female', 'Unknown'],
+            datasets: [{
+                label: 'Seal Count',
+                data: [males, females, unknowns],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(153, 102, 255, 0.6)'
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(153, 102, 255, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            resizeDelay: 150, // Prevents load-time size shifts from snapping animation
+            animation: {
+                duration: 1000,
+                easing: 'easeOutQuart'
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        boxWidth: 10,
+                        font: { size: 10 }
                     }
                 }
             }
-        });
-    }
+        }
+    });
 }
 
 // Draw age distribution as a Bar Chart
@@ -66,54 +61,51 @@ function updateAgeChart(labels, counts) {
         return;
     }
 
-    const chartData = {
-        labels: labels,
-        datasets: [{
-            label: 'Seals Count',
-            data: counts,
-            backgroundColor: 'rgba(75, 192, 192, 0.6)',
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 1
-        }]
-    };
-
     if (ageChartInstance) {
-        ageChartInstance.data = chartData;
-        ageChartInstance.update();
-    } else {
-        ageChartInstance = new Chart(ctx, {
-            type: 'bar',
-            data: chartData,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                resizeDelay: 150,
-                animation: {
-                    duration: 1000,
-                    easing: 'easeOutQuart'
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            precision: 0,
-                            font: { size: 9 }
-                        }
-                    },
-                    x: {
-                        ticks: {
-                            font: { size: 9 }
-                        }
+        ageChartInstance.destroy();
+    }
+
+    ageChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Seals Count',
+                data: counts,
+                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            resizeDelay: 150,
+            animation: {
+                duration: 1000,
+                easing: 'easeOutQuart'
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0,
+                        font: { size: 9 }
                     }
                 },
-                plugins: {
-                    legend: {
-                        display: false
+                x: {
+                    ticks: {
+                        font: { size: 9 }
                     }
                 }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
             }
-        });
-    }
+        }
+    });
 }
 
 // Update stomach content donut chart with changes to legend 
@@ -124,6 +116,10 @@ function updateStomachChart(preyContents, totalPreyItems) {
 
     if (typeof Chart === 'undefined') {
         return;
+    }
+
+    if (stomachChartInstance) {
+        stomachChartInstance.destroy();
     }
 
     const preyItemsArray = Object.entries(preyContents).map(([label, value]) => ({ label, value }));
@@ -158,39 +154,32 @@ function updateStomachChart(preyContents, totalPreyItems) {
         return colors[idx % colors.length];
     });
 
-    const chartData = {
-        labels: labels,
-        datasets: [{
-            data: data,
-            backgroundColor: backgroundColors,
-            borderColor: borderColors,
-            borderWidth: 1
-        }]
-    };
-
-    if (stomachChartInstance) {
-        stomachChartInstance.data = chartData;
-        stomachChartInstance.update();
-    } else {
-        stomachChartInstance = new Chart(ctx, {
-            type: 'doughnut',
-            data: chartData,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                resizeDelay: 150,
-                animation: {
-                    duration: 1000,
-                    easing: 'easeOutQuart'
-                },
-                plugins: {
-                    legend: {
-                        display: false
-                    }
+    stomachChartInstance = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data,
+                backgroundColor: backgroundColors,
+                borderColor: borderColors,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            resizeDelay: 150,
+            animation: {
+                duration: 1000,
+                easing: 'easeOutQuart'
+            },
+            plugins: {
+                legend: {
+                    display: false
                 }
             }
-        });
-    }
+        }
+    });
 
     let legendContainer = document.getElementById('stomach-legend-container');
     if (!legendContainer) {
@@ -285,7 +274,10 @@ function updateDetailStomachChart(preyContents, totalPreyItems) {
         return;
     }
 
-    // Safely structure incoming contents 
+    if (detailStomachChartInstance) {
+        detailStomachChartInstance.destroy();
+    }
+
     const contents = preyContents || {};
     const preyItemsArray = Object.entries(contents).map(([label, value]) => ({ label, value }));
     preyItemsArray.sort((a, b) => b.value - a.value);
@@ -319,39 +311,32 @@ function updateDetailStomachChart(preyContents, totalPreyItems) {
         return colors[idx % colors.length];
     });
 
-    const chartData = {
-        labels: labels,
-        datasets: [{
-            data: data,
-            backgroundColor: backgroundColors,
-            borderColor: borderColors,
-            borderWidth: 1
-        }]
-    };
-
-    if (detailStomachChartInstance) {
-        detailStomachChartInstance.data = chartData;
-        detailStomachChartInstance.update();
-    } else {
-        detailStomachChartInstance = new Chart(ctx, {
-            type: 'doughnut',
-            data: chartData,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                resizeDelay: 150,
-                animation: {
-                    duration: 1000,
-                    easing: 'easeOutQuart'
-                },
-                plugins: {
-                    legend: {
-                        display: false
-                    }
+    detailStomachChartInstance = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data,
+                backgroundColor: backgroundColors,
+                borderColor: borderColors,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            resizeDelay: 150,
+            animation: {
+                duration: 1000,
+                easing: 'easeOutQuart'
+            },
+            plugins: {
+                legend: {
+                    display: false
                 }
             }
-        });
-    }
+        }
+    });
 
     let legendContainer = document.getElementById('detail-stomach-legend-container');
     if (!legendContainer) {

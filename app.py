@@ -257,7 +257,7 @@ def home():
         lon = group[0]['lon']
         
         icon_html = f"""
-        <div onclick="window.parent.selectSealFromMap('{zone}'); event.stopPropagation();" style="
+        <div onclick="window.parent.postMessage({{ type: 'selectZone', zone: '{zone}' }}, '*'); event.stopPropagation();" style="
             display: flex;
             flex-direction: column;
             align-items: center;
