@@ -105,6 +105,30 @@ body {
     overflow-y: scroll;
 }
 
+.sidebar-panel::-webkit-scrollbar {
+    width: 16px;
+}
+
+.detail-stomach-list::-webkit-scrollbar {
+    width: 16px;
+}
+
+.index-list::-webkit-scrollbar-thumb {
+    background-image: url("{{ image_url }}");
+    border-radius: 8px;
+    background-clip: padding-box;
+}
+.sidebar-panel::-webkit-scrollbar-thumb {
+    background-image: url("{{ image_url }}");
+    border-radius: 8px;
+    background-clip: padding-box;
+}
+.detail-stomach-list::-webkit-scrollbar-thumb {
+    background-image: url("{{ image_url }}");
+    border-radius: 8px;
+    background-clip: padding-box;
+}
+
 .detail-stomach-list{
     max-height: 120px; 
     overflow-y: scroll; 
@@ -115,6 +139,7 @@ body {
     border-radius: 4px; 
     background: #fafafa;
 }
+
 .index-section {
     display: grid;
     grid-template-columns: 1fr 2fr;
@@ -154,12 +179,6 @@ body {
     border-radius: 4px;
     background: #fafafa;
     height: 0; 
-}
-
-.index-list::-webkit-scrollbar-thumb {
-    background-color: white;
-    border-radius: 8px;
-    background-clip: padding-box;
 }
 
 .index-list::-webkit-scrollbar {

@@ -302,6 +302,11 @@ def home():
 
     map_html = m._repr_html_()
     return render_template('index.html', map_html=map_html, seals_data=seals)
+    
+@app.route("/style.css")
+def style_css():
+    image_url = icon
+    return Response(render_template("style.css", image_url=image_url), mimetype="text/css")
 
 
 if __name__ == '__main__':
