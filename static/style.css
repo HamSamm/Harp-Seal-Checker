@@ -105,12 +105,9 @@ body {
     overflow-y: auto;
 }
 
-.sidebar-panel::-webkit-scrollbar-track {
-    background: default;
-}
-
 .sidebar-panel::-webkit-scrollbar {
-    border-radius: 8px; /* Match container's border-radius */
+    border-radius: 8px; 
+    background:default;
 }
 
 .detail-stomach-list{
@@ -121,11 +118,12 @@ body {
     font-size: 10px; 
     border: 1px dashed #ccc; 
     border-radius: 4px; 
-    background: #fafafa;"
+    background: #fafafa;
 }
 
 .detail-stomach-list::-webkit-scrollbar{
-    border-radius: 8px; /* Match container's border-radius */
+    border-radius: 8px; 
+    background: default;
 }
 
 .index-section {
@@ -181,7 +179,8 @@ body {
 }
 
 .index-list::-webkit-scrollbar {
-    border-radius: 8px; /* Match container's border-radius */
+    border-radius: 8px; 
+    background:default;
 }
 
 .filter-grid {
