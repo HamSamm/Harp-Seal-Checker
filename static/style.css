@@ -102,18 +102,12 @@ body {
     width: 360px;
     flex-shrink: 0;
     height: 100%;
-    overflow: hidden;
+    overflow-y: scroll;
 }
-
-.scrollbar {
-    overflow: auto;
-    height: inherit;
-}
-
 
 .detail-stomach-list{
     max-height: 120px; 
-    overflow: hidden; 
+    overflow-y: scroll; 
     margin-top: 10px; 
     padding: 6px; 
     font-size: 10px; 
@@ -155,11 +149,19 @@ body {
 
 .index-list {
     flex-grow: 1;
-    overflow-y: auto;
+    overflow-y: scroll;
     border: 1px solid #ddd;
     border-radius: 4px;
     background: #fafafa;
     height: 0; 
+}
+
+.index-list::-webkit-scrollbar-thumb {
+    background-color: transparent;
+}
+
+.index-list::-webkit-scrollbar {
+    width: 16px;
 }
 
 .index-list-item {

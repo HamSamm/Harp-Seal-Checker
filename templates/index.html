@@ -34,39 +34,35 @@
 
             <!-- Side Panel -->
             <div class="wireframe-box sidebar-panel">
-                <div class="scrollbar">
-                    <h3 id="side-title">Select a Zone on the Map</h3>
-                    <hr style="margin: 10px 0;">
-                    
-                    <p><strong>Area Population:</strong> <span id="side-pop">-</span></p>
-                    <p><strong>Average Age:</strong> <span id="side-age">-</span></p>
+                <h3 id="side-title">Select a Zone on the Map</h3>
+                <hr style="margin: 10px 0;">
+                
+                <p><strong>Area Population:</strong> <span id="side-pop">-</span></p>
+                <p><strong>Average Age:</strong> <span id="side-age">-</span></p>
 
-                    <!-- ChartJS Area Demographics -->
-                    <div style="position: relative; margin-top: 20px;">
-                        <h4 style="font-size: 13px; color: #555; margin-bottom: 5px;">Demographic Profile</h4>
-                        <div style="height: 150px; position: relative;">
-                            <canvas id="ratioChart"></canvas>
-                        </div>
+                <!-- ChartJS Area Demographics -->
+                <div style="position: relative; margin-top: 20px;">
+                    <h4 style="font-size: 13px; color: #555; margin-bottom: 5px;">Demographic Profile</h4>
+                    <div style="height: 150px; position: relative;">
+                        <canvas id="ratioChart"></canvas>
                     </div>
+                </div>
 
-                    <!-- ChartJS Age Distribution -->
-                    <div style="position: relative; margin-top: 25px;">
-                        <h4 style="font-size: 13px; color: #555; margin-bottom: 5px;">Age Distribution (Zone)</h4>
-                        <div style="height: 140px; position: relative;">
-                            <canvas id="ageChart"></canvas>
-                        </div>
+                <!-- ChartJS Age Distribution -->
+                <div style="position: relative; margin-top: 25px;">
+                    <h4 style="font-size: 13px; color: #555; margin-bottom: 5px;">Age Distribution (Zone)</h4>
+                    <div style="height: 140px; position: relative;">
+                        <canvas id="ageChart"></canvas>
                     </div>
-                    <!-- ChartJS Zone Stomach Content -->
-                    <div style="position: relative; margin-top: 25px;">
-                        <h4 style="font-size: 13px; color: #555; margin-bottom: 5px;">Stomach Content</h4>
-                        <div style="height: 220px; position: relative; width: 100%;"> 
-                            <canvas id="stomachChart"></canvas>
-                        </div>
-                        <div class="scrollbar">
-                            <div id="stomach-legend-container" style="max-height: 180px; overflow-y: auto; margin-top: 12px; padding: 8px; font-size: 11px; border: 1px dashed #ccc; border-radius: 4px; background: #fafafa;"></div>
-                        </div>
-                        <div id="stomach-note" style="font-size: 11px; text-align: center; color: #666; margin-top: 8px;"></div>
+                </div>
+                <!-- ChartJS Zone Stomach Content -->
+                <div style="position: relative; margin-top: 25px;">
+                    <h4 style="font-size: 13px; color: #555; margin-bottom: 5px;">Stomach Content</h4>
+                    <div style="height: 220px; position: relative; width: 100%;"> 
+                        <canvas id="stomachChart"></canvas>
                     </div>
+                    <div id="stomach-legend-container" style="max-height: 180px; overflow-y: auto; margin-top: 12px; padding: 8px; font-size: 11px; border: 1px dashed #ccc; border-radius: 4px; background: #fafafa;"></div>
+                    <div id="stomach-note" style="font-size: 11px; text-align: center; color: #666; margin-top: 8px;"></div>
                 </div>
             </div>
         </div>
