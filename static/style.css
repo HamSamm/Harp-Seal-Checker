@@ -102,25 +102,19 @@ body {
     width: 360px;
     flex-shrink: 0;
     height: 100%;
-    overflow: hidden;
-}
-
-.scrollbar{
-    height:100%;
     overflow-y: auto;
 }
 
 .detail-stomach-list{
     max-height: 120px; 
-    overflow: hidden; 
+    overflow-y: auto; 
     margin-top: 10px; 
     padding: 6px; 
     font-size: 10px; 
     border: 1px dashed #ccc; 
     border-radius: 4px; 
-    background: #fafafa;
+    background: #fafafa;"
 }
-
 .index-section {
     display: grid;
     grid-template-columns: 1fr 2fr;
@@ -155,7 +149,7 @@ body {
 
 .index-list {
     flex-grow: 1;
-    overflow: hidden;
+    overflow-y: auto;
     border: 1px solid #ddd;
     border-radius: 4px;
     background: #fafafa;
