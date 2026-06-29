@@ -136,7 +136,7 @@ body {
     border: 2px solid transparent;
 }
 
-.detail-stomach-list::-webkit-scrollbar-thumb {
+.csstomach-legend-container::-webkit-scrollbar-thumb {
     background-image: var(--seal-icon-url);
     background-size: 100% 100%;
     background-position: center;
