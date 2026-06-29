@@ -12,7 +12,7 @@
             background-image: url("{{ image_url }}");
             background-size: 100% 100%;
             background-position: center;
-            background-color: #555;
+            background-color: #ccc;
             border-radius: 8px;
             background-clip: padding-box;
         }
@@ -22,7 +22,7 @@
             background-position: center;
             border-radius: 8px;
             background-clip: padding-box;
-            background-color: #555;
+            background-color: #ccc;
         }
         .stomach-legend-container::-webkit-scrollbar-thumb {
             background-image: url("{{ image_url }}");
@@ -30,7 +30,7 @@
             background-position: center;
             border-radius: 8px;
             background-clip: padding-box;
-            background-color: #555;
+            background-color: #ccc;
         }
     </style>
 </head>
@@ -87,7 +87,9 @@
                     <div style="height: 220px; position: relative; width: 100%;"> 
                         <canvas id="stomachChart"></canvas>
                     </div>
-                    <div id="stomach-legend-container"></div>
+                    <div id="stomach-legend-container">
+                        
+                    </div>
                     <div id="stomach-note" style="font-size: 11px; text-align: center; color: #666; margin-top: 8px;"></div>
                 </div>
             </div>
