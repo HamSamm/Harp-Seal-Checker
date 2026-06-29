@@ -105,21 +105,26 @@ body {
     overflow-y: auto;
 }
 
-.sidebar-panel::-webkit-scrollbar{
-    width: 12px;
-}
-
 .sidebar-panel::-webkit-scrollbar-track {
     border-radius: 12px; /* Match container's border-radius */
     background: transparent; /* Make track transparent */
-    margin: 4px 4px; /* Optional: Add space between track and container edges */
 }
 
-.sidebar-panel::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 6px; /* Rounded thumb */
+.detail-stomach-list{
+    max-height: 120px; 
+    overflow-y: auto; 
+    margin-top: 10px; 
+    padding: 6px; 
+    font-size: 10px; 
+    border: 1px dashed #ccc; 
+    border-radius: 4px; 
+    background: #fafafa;"
 }
 
+.detail-stomach-list::-webkit-scrollbar-track{
+    border-radius: 12px; /* Match container's border-radius */
+    background: transparent; /* Make track transparent */
+}
 
 .index-section {
     display: grid;
@@ -173,19 +178,9 @@ body {
     background: #eef2f5;
 }
 
-.index-list::-webkit-scrollbar{
-    width: 12px;
-}
-
 .index-list::-webkit-scrollbar-track {
     border-radius: 12px; /* Match container's border-radius */
     background: transparent; /* Make track transparent */
-    margin: 4px 4px; /* Optional: Add space between track and container edges */
-}
-
-.index-list::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 6px; /* Rounded thumb */
 }
 
 .filter-grid {
