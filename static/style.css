@@ -106,7 +106,7 @@ body {
 }
 
 .scrollbar {
-    overflow-y: auto;
+    overflow: auto;
     height: inherit;
 }
 
