@@ -157,7 +157,9 @@ body {
 }
 
 .index-list::-webkit-scrollbar-thumb {
-    background-color: transparent;
+    background-color: white;
+    border-radius: 8px;
+    background-clip: padding-box;
 }
 
 .index-list::-webkit-scrollbar {
