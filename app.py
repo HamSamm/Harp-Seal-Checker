@@ -202,10 +202,6 @@ def parse_seals_csv():
         })
         
     return seals_list
-@app.route("/static/style.css")
-def style_css():
-    image_url = icon
-    return Response(render_template("style.css", image_url=image_url), mimetype="text/css")
 
 @app.route('/')
 def home():
@@ -305,7 +301,7 @@ def home():
         ).add_to(m)
 
     map_html = m._repr_html_()
-    return render_template('index.html', map_html=map_html, seals_data=seals)
+    return render_template('index.html', map_html=map_html, seals_data=seals, icon=icon)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)

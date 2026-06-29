@@ -7,6 +7,32 @@
     <!-- Import Chart.js from CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=1.2">
+    <style>
+        .index-list::-webkit-scrollbar-thumb {
+            background-image: url("{{ image_url }}");
+            background-size: 100% 100%;
+            background-position: center;
+            background-color: #555;
+            border-radius: 8px;
+            background-clip: padding-box;
+        }
+        .sidebar-panel::-webkit-scrollbar-thumb {
+            background-image: url("{{ image_url }}");
+            background-size: 100% 100%;
+            background-position: center;
+            border-radius: 8px;
+            background-clip: padding-box;
+            background-color: #555;
+        }
+        .stomach-legend-container::-webkit-scrollbar-thumb {
+            background-image: url("{{ image_url }}");
+            background-size: 100% 100%;
+            background-position: center;
+            border-radius: 8px;
+            background-clip: padding-box;
+            background-color: #555;
+        }
+    </style>
 </head>
 <body>
 

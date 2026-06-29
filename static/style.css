@@ -112,31 +112,6 @@ body {
 .stomach-legend-container::-webkit-scrollbar {
     width: 16px;
 }
-
-.index-list::-webkit-scrollbar-thumb {
-    background-image: url("{{ image_url }}");
-    background-size: 100% 100%;
-    background-position: center;
-    background-color: #555;
-    border-radius: 8px;
-    background-clip: padding-box;
-}
-.sidebar-panel::-webkit-scrollbar-thumb {
-    background-image: url("{{ image_url }}");
-    background-size: 100% 100%;
-    background-position: center;
-    border-radius: 8px;
-    background-clip: padding-box;
-    background-color: #555;
-}
-.stomach-legend-container::-webkit-scrollbar-thumb {
-    background-image: url("{{ image_url }}");
-    background-size: 100% 100%;
-    background-position: center;
-    border-radius: 8px;
-    background-clip: padding-box;
-    background-color: #555;
-}
 .stomach-legend-container{
     max-height: 180px; 
     overflow-y: scroll; 
