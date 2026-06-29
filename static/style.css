@@ -106,19 +106,19 @@ body {
 }
 
 .index-list::-webkit-scrollbar {
-    width: 8px;
+    width: 16px;
 }
 
 .sidebar-panel::-webkit-scrollbar {
-    width: 8px;
+    width: 16px;
 }
 
 .stomach-legend-container::-webkit-scrollbar {
-    width: 8x;
+    width: 16x;
 }
 .index-list::-webkit-scrollbar-thumb {
     background-image: var(--seal-icon-url);
-    background-size: 8px 100%;
+    background-size: 100% 100%;
     background-position: center;
     background-color: #ccc;
     border-radius: 8px;
@@ -128,7 +128,7 @@ body {
 
 .sidebar-panel::-webkit-scrollbar-thumb {
     background-image: var(--seal-icon-url);
-    background-size: 8px 100%;
+    background-size: 100% 100%;
     background-position: center;
     border-radius: 8px;
     background-clip: padding-box;
@@ -138,7 +138,7 @@ body {
 
 .detail-stomach-list::-webkit-scrollbar-thumb {
     background-image: var(--seal-icon-url);
-    background-size: 8px 100%;
+    background-size: 100% 100%;
     background-position: center;
     border-radius: 8px;
     background-clip: padding-box;
@@ -159,7 +159,7 @@ body {
 
 .detail-stomach-list{
     max-height: 120px; 
-    overflow-y: auto; 
+    overflow-y: scroll; 
     margin-top: 10px; 
     padding: 6px; 
     font-size: 10px; 
