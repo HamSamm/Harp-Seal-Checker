@@ -118,7 +118,7 @@ body {
 }
 .index-list::-webkit-scrollbar-thumb {
     background-image: var(--seal-icon-url);
-    background-size: 100% 100%;
+    background-size: 8px 100%;
     background-position: center;
     background-color: #ccc;
     border-radius: 8px;
@@ -128,7 +128,7 @@ body {
 
 .sidebar-panel::-webkit-scrollbar-thumb {
     background-image: var(--seal-icon-url);
-    background-size: 100% 100%;
+    background-size: 8px 100%;
     background-position: center;
     border-radius: 8px;
     background-clip: padding-box;
@@ -136,9 +136,9 @@ body {
     border: 2px solid transparent;
 }
 
-.csstomach-legend-container::-webkit-scrollbar-thumb {
+.detail-stomach-list::-webkit-scrollbar-thumb {
     background-image: var(--seal-icon-url);
-    background-size: 100% 100%;
+    background-size: 8px 100%;
     background-position: center;
     border-radius: 8px;
     background-clip: padding-box;
