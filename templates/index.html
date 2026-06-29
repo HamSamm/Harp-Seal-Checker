@@ -7,32 +7,6 @@
     <!-- Import Chart.js from CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=1.2">
-    <style>
-        .index-list::-webkit-scrollbar-thumb {
-            background-image: url("{{ image_url }}");
-            background-size: 100% 100%;
-            background-position: center;
-            background-color: #ccc;
-            border-radius: 8px;
-            background-clip: padding-box;
-        }
-        .sidebar-panel::-webkit-scrollbar-thumb {
-            background-image: url("{{ image_url }}");
-            background-size: 100% 100%;
-            background-position: center;
-            border-radius: 8px;
-            background-clip: padding-box;
-            background-color: #ccc;
-        }
-        .stomach-legend-container::-webkit-scrollbar-thumb {
-            background-image: url("{{ image_url }}");
-            background-size: 100% 100%;
-            background-position: center;
-            border-radius: 8px;
-            background-clip: padding-box;
-            background-color: #ccc;
-        }
-    </style>
 </head>
 <body>
 
@@ -87,9 +61,7 @@
                     <div style="height: 220px; position: relative; width: 100%;"> 
                         <canvas id="stomachChart"></canvas>
                     </div>
-                    <div id="stomach-legend-container">
-                        
-                    </div>
+                    <div class="csstomach-legend-container" id="stomach-legend-container"></div>
                     <div id="stomach-note" style="font-size: 11px; text-align: center; color: #666; margin-top: 8px;"></div>
                 </div>
             </div>

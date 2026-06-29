@@ -116,7 +116,31 @@ body {
 .stomach-legend-container::-webkit-scrollbar {
     width: 8x;
 }
-.stomach-legend-container {
+.index-list::-webkit-scrollbar-thumb {
+    background-image: url("{{ image_url }}");
+    background-size: auto 100%;
+    background-position: center;
+    background-color: #ccc;
+    border-radius: 8px;
+    background-clip: padding-box;
+}
+.sidebar-panel::-webkit-scrollbar-thumb {
+    background-image: url("{{ image_url }}");
+    background-size: auto 100%;
+    background-position: center;
+    border-radius: 8px;
+    background-clip: padding-box;
+    background-color: #ccc;
+}
+.stomach-legend-container::-webkit-scrollbar-thumb {
+    background-image: url("{{ image_url }}");
+    background-size: auto 100%;
+    background-position: center;
+    border-radius: 8px;
+    background-clip: padding-box;
+    background-color: #ccc;
+}
+.csstomach-legend-container {
     max-height: 180px; 
     overflow-y: auto; 
     margin-top: 12px; 
