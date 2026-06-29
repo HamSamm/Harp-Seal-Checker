@@ -301,7 +301,7 @@ def home():
         ).add_to(m)
 
     map_html = m._repr_html_()
-    return render_template('index.html', map_html=map_html, seals_data=seals, icon=icon)
+    return render_template('index.html', map_html=map_html, seals_data=seals, icon_url=icon_url)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
