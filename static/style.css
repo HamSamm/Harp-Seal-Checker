@@ -117,29 +117,35 @@ body {
     width: 8x;
 }
 .index-list::-webkit-scrollbar-thumb {
-    background-image: url("{{ image_url }}");
-    background-size: auto 100%;
+    background-image: var(--seal-icon-url);
+    background-size: 100% 100%;
     background-position: center;
     background-color: #ccc;
     border-radius: 8px;
     background-clip: padding-box;
+    border: 2px solid transparent;
 }
+
 .sidebar-panel::-webkit-scrollbar-thumb {
-    background-image: url("{{ image_url }}");
-    background-size: auto 100%;
+    background-image: var(--seal-icon-url);
+    background-size: 100% 100%;
     background-position: center;
     border-radius: 8px;
     background-clip: padding-box;
     background-color: #ccc;
+    border: 2px solid transparent;
 }
-.stomach-legend-container::-webkit-scrollbar-thumb {
-    background-image: url("{{ image_url }}");
-    background-size: auto 100%;
+
+.csstomach-legend-container::-webkit-scrollbar-thumb {
+    background-image: var(--seal-icon-url);
+    background-size: 100% 100%;
     background-position: center;
     border-radius: 8px;
     background-clip: padding-box;
     background-color: #ccc;
+    border: 2px solid transparent;
 }
+
 .csstomach-legend-container {
     max-height: 180px; 
     overflow-y: auto; 
