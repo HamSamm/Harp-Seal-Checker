@@ -157,6 +157,24 @@ body {
     background: #eef2f5;
 }
 
+.index-list::-webkit-scrollbar{
+    width: 12px;
+}
+
+.index-list::-webkit-scrollbar-track {
+    border-radius: 12px; /* Match container's border-radius */
+    background: transparent; /* Make track transparent */
+    margin: 4px 0; /* Optional: Add space between track and container edges */
+
+}
+
+.index-list::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 6px; /* Rounded thumb */
+}
+
+
+
 .filter-grid {
     display: flex;
     gap: 10px;
