@@ -105,7 +105,7 @@ body {
     overflow-y: auto;
 }
 
-.sidebar-panel::-webkit-scrollbar-track {
+.sidebar-panel::-webkit-scrollbar {
     border-radius: 12px; /* Match container's border-radius */
     background: transparent; /* Make track transparent */
 }
@@ -121,7 +121,7 @@ body {
     background: #fafafa;"
 }
 
-.detail-stomach-list::-webkit-scrollbar-track{
+.detail-stomach-list::-webkit-scrollbar{
     border-radius: 12px; /* Match container's border-radius */
     background: transparent; /* Make track transparent */
 }
@@ -178,7 +178,7 @@ body {
     background: #eef2f5;
 }
 
-.index-list::-webkit-scrollbar-track {
+.index-list::-webkit-scrollbar {
     border-radius: 12px; /* Match container's border-radius */
     background: transparent; /* Make track transparent */
 }
