@@ -106,15 +106,15 @@ body {
 }
 
 .index-list::-webkit-scrollbar {
-    width: 16px;
+    width: 8px;
 }
 
 .sidebar-panel::-webkit-scrollbar {
-    width: 16px;
+    width: 8px;
 }
 
 .stomach-legend-container::-webkit-scrollbar {
-    width: 16px;
+    width: 8x;
 }
 .stomach-legend-container {
     max-height: 180px; 
