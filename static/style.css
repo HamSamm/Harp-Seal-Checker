@@ -102,14 +102,9 @@ body {
     width: 360px;
     flex-shrink: 0;
     height: 100%;
-    overflow-y: auto;
 }
 
 .index-list::-webkit-scrollbar {
-    width: 16px;
-}
-
-.sidebar-panel::-webkit-scrollbar {
     width: 16px;
 }
 
@@ -126,15 +121,6 @@ body {
     border: 2px solid transparent;
 }
 
-.sidebar-panel::-webkit-scrollbar-thumb {
-    background-image: var(--seal-icon-url);
-    background-size: 100% 100%;
-    background-position: center;
-    border-radius: 8px;
-    background-clip: padding-box;
-    background-color: #ccc;
-    border: 2px solid transparent;
-}
 
 .scrollbar::-webkit-scrollbar-thumb {
     background-image: var(--seal-icon-url);
@@ -147,10 +133,7 @@ body {
 }
 
 .scrollbar{
-    max-height: inherit;
     overflow-y: auto;
-    font-size: inherit;
-    background: transparent;
 }
 
 .csstomach-legend-container {
