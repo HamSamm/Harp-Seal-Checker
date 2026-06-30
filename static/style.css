@@ -102,7 +102,7 @@ body {
     width: 360px;
     flex-shrink: 0;
     height: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .index-list::-webkit-scrollbar {
@@ -113,7 +113,7 @@ body {
     width: 16px;
 }
 
-.csstomach-legend-container::-webkit-scrollbar {
+.scrollbar::-webkit-scrollbar {
     width: 16x;
 }
 .index-list::-webkit-scrollbar-thumb {
@@ -136,7 +136,7 @@ body {
     border: 2px solid transparent;
 }
 
-.csstomach-legend-container::-webkit-scrollbar-thumb {
+.scrollbar::-webkit-scrollbar-thumb {
     background-image: var(--seal-icon-url);
     background-size: 100% 100%;
     background-position: center;
@@ -146,9 +146,16 @@ body {
     border: 2px solid transparent;
 }
 
+.scrollbar{
+    max-height: inherit;
+    overflow-y: auto;
+    font-size: inherit;
+    background: transparent;
+}
+
 .csstomach-legend-container {
     max-height: 180px; 
-    overflow-y: auto; 
+    overflow: hidden; 
     margin-top: 12px; 
     padding: 8px; 
     font-size: 11px; 
@@ -159,7 +166,7 @@ body {
 
 .detail-stomach-list{
     max-height: 120px; 
-    overflow-y: scroll; 
+    overflow-y: auto; 
     margin-top: 10px; 
     padding: 6px; 
     font-size: 10px; 
@@ -202,7 +209,7 @@ body {
 
 .index-list {
     flex-grow: 1;
-    overflow-y: scroll;
+    overflow-y: auto;
     border: 1px solid #ddd;
     border-radius: 4px;
     background: #fafafa;
