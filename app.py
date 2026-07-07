@@ -25,7 +25,6 @@ ICON_BLOB_NAME = "FSDHstatic/Seal-Icon.png"
 
 
 def load_df_from_azure(blob_name, encoding='utf-8'):
-    # Retrieve directly from AZURE_SAS_URI without environment fallback
     full_sas_uri = AZURE_SAS_URI
     if not full_sas_uri:
         print("[DEBUG] AZURE_SAS_URI is not set.")
@@ -203,9 +202,15 @@ def parse_seals_csv():
         
     return seals_list
 
+GLOBAL_SEALS_DATASET = parse_seals_csv()
 @app.route('/')
 def home():
-    seals = parse_seals_csv()
+    global GLOBAL_SEALS_DATASET
+    # Fallback in case environment variables were not active at initial startup
+    if not GLOBAL_SEALS_DATASET:
+        GLOBAL_SEALS_DATASET = parse_seals_csv()
+        
+    seals = GLOBAL_SEALS_DATASET
     
     if seals:
         avg_lat = sum(s['lat'] for s in seals) / len(seals)
@@ -215,18 +220,19 @@ def home():
         m = folium.Map(location=[50.5, -56.5], zoom_start=5, control_scale=True, world_copy_jump=True)
 
     # Generate the Azure SAS URL directly for the seal icon
+    icon_url = ""
     full_sas_uri = AZURE_SAS_URI
-
-    if "?" in full_sas_uri:  # Formatting
-        base_uri, token = full_sas_uri.split("?", 1)
-        if not base_uri.endswith("/"):
-            base_uri += "/"
-        icon_url = f"{base_uri}{ICON_BLOB_NAME}?{token}"
-    else:
-        if not full_sas_uri.endswith("/"):
-            icon_url = f"{full_sas_uri}/{ICON_BLOB_NAME}" 
+    if full_sas_uri:
+        if "?" in full_sas_uri:  # Formatting
+            base_uri, token = full_sas_uri.split("?", 1)
+            if not base_uri.endswith("/"):
+                base_uri += "/"
+            icon_url = f"{base_uri}{ICON_BLOB_NAME}?{token}"
         else:
-            icon_url = f"{full_sas_uri}{ICON_BLOB_NAME}"
+            if not full_sas_uri.endswith("/"):
+                icon_url = f"{full_sas_uri}/{ICON_BLOB_NAME}" 
+            else:
+                icon_url = f"{full_sas_uri}{ICON_BLOB_NAME}"
 
     # Group seals by NAFO zone to represent markers on the map
     nafo_groups = {}
