@@ -106,7 +106,7 @@ def parse_seals_csv():
     df.columns = [c.strip() for c in df.columns]
 
     id_col = find_col(df, ['sealid'])
-    gen_col = find_col(df, ['gen'])
+    gen_col = find_col(df, ['sex'])
     age_col = find_col(df, ['age'])
     nafo_col = find_col(df, ['nafo'])
     prey_col = find_col(df, ['prey'])
