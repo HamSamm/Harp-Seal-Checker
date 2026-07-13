@@ -126,8 +126,6 @@ def parse_seals_csv():
             raw_gen = group[gen_col].iloc[0]
             if not pd.isna(raw_gen) and str(raw_gen).strip():
                 gen = str(raw_gen).strip().upper()[0]
-                if gen not in ['M', 'F']:
-                    gen = 'U'
                     
         age_display = 'Unknown'
         age_num = None
