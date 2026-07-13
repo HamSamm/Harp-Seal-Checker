@@ -110,7 +110,7 @@ def parse_seals_csv():
     age_col = find_col(df, ['age'])
     nafo_col = find_col(df, ['nafo'])
     prey_col = find_col(df, ['prey'])
-    num_col = find_col(df, ['numberoflineitems'])
+    num_col = find_col(df, ['numberofindividuals'])
     
     if not id_col:
         print("[DEBUG] 'SealID' column absent. Returning empty dataset.")
@@ -215,7 +215,7 @@ def home():
         avg_lon = sum(s['lon'] for s in seals) / len(seals)
         m = folium.Map(location=[avg_lat, avg_lon], zoom_start=5, control_scale=True, world_copy_jump=True)
     else:
-        m = folium.Map(location=[50.5, -56.5], zoom_start=5, control_scale=True, world_copy_jump=True)
+        m = folium.Map(location=[45.416141, -75.698076], zoom_start=5, control_scale=True, world_copy_jump=True)
 
     # Generate the Azure SAS URL directly for the seal icon
     icon_url = ""
