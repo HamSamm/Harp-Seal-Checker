@@ -308,4 +308,4 @@ def home():
     return render_template('index.html', map_html=map_html, seals_data=seals, icon_url=icon_url)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80, debug=True)
+    app.run(host='0.0.0.0', port=80, debug=False)
