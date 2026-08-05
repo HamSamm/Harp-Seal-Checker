@@ -1,8 +1,8 @@
 // Update sidebar panel contents and charts with aggregated data for a NAFO Zone (Map Selection)
 function selectZone(zoneCode) {
-    if (typeof sealsData === 'undefined' || sealsData.length === 0) return;
+    if (typeof sealsData === 'undefined' || sealsData.length === 0) return; // Error Handling 
 
-    const zoneSeals = sealsData.filter(s => s.nafo_zone === zoneCode);
+    const zoneSeals = sealsData.filter(s => s.nafo_zone === zoneCode); // 
     if (zoneSeals.length === 0) return;
 
     const titleEl = document.getElementById('side-title');
@@ -60,38 +60,32 @@ function selectZone(zoneCode) {
 
 // Update bottom snapshot details and individual charts for an individual seal (Index Selection)
 function selectSeal(seal) {
-    if (!seal) return;
+    if (!seal) return; // Error Handling 
 
     const detailIdEl = document.getElementById('detail-id');
-    if (detailIdEl) detailIdEl.innerText = seal.id;
+    if (detailIdEl) detailIdEl.innerText = seal.id; // Display seal id
     
     const detailGenderEl = document.getElementById('detail-gender');
     if (detailGenderEl) {
         const genderDisplay = seal.gender === 'M' ? 'Male' : seal.gender === 'F' ? 'Female' : 'Unknown';
-        detailGenderEl.innerText = genderDisplay;
+        detailGenderEl.innerText = genderDisplay; // Display Gender
     }
 
     const detailAgeEl = document.getElementById('detail-age');
-    if (detailAgeEl) detailAgeEl.innerText = seal.age;
+    if (detailAgeEl) detailAgeEl.innerText = seal.age; // Display Age
 
     const detailLocEl = document.getElementById('detail-location');
-    if (detailLocEl) detailLocEl.innerText = seal.area || seal.nafo_zone || '-';
+    if (detailLocEl) detailLocEl.innerText = seal.area || seal.nafo_zone || '-'; // Display Location 
 
     const detailMealEl = document.getElementById('detail-meal');
-    if (detailMealEl) detailMealEl.innerText = seal.meal;
+    if (detailMealEl) detailMealEl.innerText = seal.meal; // Display Meal
 
-    const preyVisual = document.getElementById('prey-visual');
-    if (preyVisual && seal.otolith) {
-        const scale = Math.min(Math.max(seal.otolith * 0.4, 0.5), 3.0);
-        preyVisual.style.transform = `scale(${scale})`;
-    }
-
-    updateDetailStomachChart(seal.prey_contents || {}, seal.total_prey_items || 0);
+    updateDetailStomachChart(seal.prey_contents || {}, seal.total_prey_items || 0); // Display Chart
 }
 
 // Start application
 function init() {
-    renderInterface();
+    renderInterface(sealsData);
     populateFilters();
 
     // Auto-select initial elements on load once layout has completely stabilized

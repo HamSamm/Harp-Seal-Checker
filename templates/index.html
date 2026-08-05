@@ -10,11 +10,11 @@
 </head>
 <body style="--seal-icon-url: url('{{ icon_url }}');">
     <div class="page-container">
-
+<!-- 9000 -->
         <!-- Header -->
-        <div class="wireframe-box header-box">
+        <div class="box header-box">
             <h1>Seal Checker 9000</h1>
-            <p style="color: #666; margin-top: 5px;">
+            <p style="color: #666666; margin-top: 5px;">
                 Stomach content data for harp seals (Pagophilus groenlandicus) collected in the waters around Newfoundland and Labrador (NL): 2017-2021.
             </p>
             <a href="https://open.canada.ca/data/en/dataset/7538501c-cd3d-4ee0-8b4a-476a625957d6" target="_blank">
@@ -32,7 +32,7 @@
             </div>
 
             <!-- Side Panel -->
-            <div class="wireframe-box sidebar-panel">
+            <div class="box sidebar-panel">
                 <h3 id="side-title">Select a Zone on the Map</h3>
                 <hr style="margin: 10px 0;">
                 
@@ -41,7 +41,7 @@
 
                 <!-- ChartJS Area Demographics -->
                 <div style="position: relative; margin-top: 20px;">
-                    <h4 style="font-size: 13px; color: #555; margin-bottom: 5px;">Demographic Profile</h4>
+                    <h4 style="font-size: 13px; color: #555555; margin-bottom: 5px;">Demographic Profile</h4>
                     <div style="height: 150px; position: relative;">
                         <canvas id="ratioChart"></canvas>
                     </div>
@@ -49,31 +49,31 @@
 
                 <!-- ChartJS Age Distribution -->
                 <div style="position: relative; margin-top: 25px;">
-                    <h4 style="font-size: 13px; color: #555; margin-bottom: 5px;">Age Distribution (Zone)</h4>
+                    <h4 style="font-size: 13px; color: #555555; margin-bottom: 5px;">Age Distribution (Zone)</h4>
                     <div style="height: 140px; position: relative;">
                         <canvas id="ageChart"></canvas>
                     </div>
                 </div>
                 <!-- ChartJS Zone Stomach Content -->
                 <div style="position: relative; margin-top: 25px;">
-                    <h4 style="font-size: 13px; color: #555; margin-bottom: 5px;">Stomach Content</h4>
+                    <h4 style="font-size: 13px; color: #555555; margin-bottom: 5px;">Stomach Content</h4>
                     <div style="height: 220px; position: relative; width: 100%;"> 
                         <canvas id="stomachChart"></canvas>
                     </div>
                     <div class="csstomach-legend-container" id="stomach-legend-container"></div>
-                    <div id="stomach-note" style="font-size: 11px; text-align: center; color: #666; margin-top: 8px;"></div>
+                    <div id="stomach-note" style="font-size: 11px; text-align: center; color: #666666; margin-top: 8px;"></div>
                 </div>
             </div>
         </div>
-
+<!--10000-->
         <!-- Seal Index Section -->
         <div class="index-section">
-            <div class="wireframe-box index-header-left">
+            <div class="box index-header-left">
                 <h2>Seal Index 10000</h2>
-                <p style="color: #666; margin-top: 5px;">Search for Individual Seals</p>
+                <p style="color: #666666; margin-top: 5px;">Search for Individual Seals</p>
             </div>
 
-            <div class="wireframe-box index-header-right">
+            <div class="box index-header-right">
                 <div class="filter-grid">
                     <input type="text" placeholder="Search by ID...">
                     <select><option>Location (NAFO)</option></select>
@@ -84,15 +84,15 @@
             </div>
 
             <!-- Bottom Left: List Index -->
-            <div class="wireframe-box index-body-left">
+            <div class="box index-body-left">
                 <h4>Index</h4>
                 <!-- Dynamic Results Count element -->
-                <p id="search-results-count" style="color: #777; font-size: 12px; margin-bottom: 8px; font-weight: bold;"></p>
+                <p id="search-results-count" style="color: #777777; font-size: 12px; margin-bottom: 8px; font-weight: bold;"></p>
                 <div class="index-list" id="index-list-container"></div>
             </div>
 
             <!-- Bottom Right: Life Snapshot Details -->
-            <div class="index-body-right wireframe-box" style="overflow-y: auto;">
+            <div class="box index-body-right">
                 <h3>Selected ID: <span id="detail-id">None Selected</span></h3>
                 <hr style="margin: 10px 0;">                
                 <h4 style="margin-top: 10px;">Information</h4>
@@ -108,12 +108,78 @@
                     <canvas id="detailStomachChart"></canvas>
                 </div>
                 <div class="detail-stomach-list" id="detail-stomach-legend-container"></div>
-                <div id="detail-stomach-note" style="font-size: 10px; text-align: center; color: #666; margin-top: 8px;"></div>
+                <div class="detail-stomach-notes" id="detail-stomach-note"></div>
+            </div>
+        </div>
+    
+    <div id="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+        <div id="loading-text">Synchronizing Cloud Repositories...</div>
+    </div>
+    <!-- Updated Seal Editor Section (Matches Wireframe Interface Layout) -->
+    <div class="adder-section">
+        <div class="box headest-box">
+            <h1>Seal Editor 11000</h1>
+            <p style="color: #666666; margin-top: 5px;">
+                Construct custom datasets to project onto the Seal Checker and Index, stored directly in the FSDH cloud.
+            </p>
+        </div>
+        
+        <!-- Left Box: File Index -->
+        <div class="box adder-left">
+            <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h4 style="font-size: 16px;">Index</h4>
+                    <div style="display: grid; grid-template-columns: auto auto auto auto; grid-template-rows: auto; align-items: right; gap: 5px;">
+                        <button class="btn" id="btn-add-file">Add</button>
+                        <button class="btn" id="btn-delete-file">Delete</button>
+                        <button class="btn" id="btn-export-file">Export</button>
+                        <button class="btn" id="btn-import-file">Import</button>
+                    </div>
+                </div>
+                <!-- Hidden Import input --> 
+                <input type="file" id="file-import-input" style="display: none;" accept=".csv">
+            </div>
+            <p style="font-size: 11px; color: #777777; margin-bottom: 10px;">
+                Check files below to map and index their combined datasets. Click a filename to edit.
+            </p>
+            <div class="csv-list" id="csv-list-container"></div>
+            <button class="btn" id="btn-apply-selection" style="margin-top: 15px; width: 100%;">
+                Refresh With Selected
+            </button>
+        </div>
+        <!-- Right Box: Inline Spreadsheet Editor -->
+        <div class="box adder-right">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <div style="display: flex; align-items: baseline; gap: 8px;">
+                    <h4 style="font-size: 16px;">Editor</h4>
+                    <span id="editing-filename-label" style="font-size: 12px; color: #666666; font-weight: bold;">(Select a file to edit)</span>
+                </div>
+                <div id="editor-actions-panel" style="display: none; gap: 8px;">
+                    <button class="btn" id="btn-add-row">Add Row</button>
+                    <button class="btn" id="btn-delete-row">Delete Row</button>
+                    <button class="btn" id="btn-save-file">Save to FSDH</button>
+                </div>
+            </div>
+            <hr style="margin: 10px 0;">
+            <!-- Display instructions by default when no file is loaded   -->
+            <div class="editor-instructions" id="editor-instructions-pane"> 
+                <p style="font-size: 14px; color: #555555; line-height: 1.5;">
+                    <strong>Database Management Instructions:</strong><br>
+                    1. Select a file from the <strong>Index</strong> bar on the left to begin editing.<br>
+                    2. The master file (first file) can be reviewed but is marked read-only to preserve reference data.<br>
+                    3. Create or import new CSV arrays. They will inherit categories directly from the master's column structure.<br>
+                    4. Select multiple datasets in the index checklists to compile and map the combined dataset.
+                </p>
+            </div>
+
+            <!-- Excel-Like Dynamic Scrollable Row Grid -->
+            <div class="editor-grid-container" id="editor-grid-container" style="display: none;">
+                <div id="editor-rows-list"></div>
             </div>
         </div>
     </div>
-
-    <!-- Expose Python aggregated list as JS object -->
+    <!-- Expose data as JS object -->
     <script>
         const sealsData = {{ seals_data | tojson | safe }};
     </script>
