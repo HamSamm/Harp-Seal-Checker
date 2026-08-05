@@ -372,7 +372,7 @@ def home():
 
 # Api stuff
 
-@app.route('/app/FEWSC/api/files', methods=['GET']) # When requested, load the list of files (GET Method)
+@app.route('/api/files', methods=['GET']) # When requested, load the list of files (GET Method)
 def list_files():
     try:
         container_client = ContainerClient.from_container_url(AZURE_SAS_URI) # Load Client 
