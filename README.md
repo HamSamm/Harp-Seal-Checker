@@ -27,7 +27,7 @@ And have access to:
 3. Type and select **`WSL: Connect to WSL`** (or open your Ubuntu terminal).
 4. Clone the repository inside your Ubuntu environment and open in **VS Code**:
    ```bash
-   git clone [https://github.com/HamSamm/Harp-Seal-Checker.git](https://github.com/HamSamm/Harp-Seal-Checker.git)
+   git clone https://github.com/HamSamm/Harp-Seal-Checker.git
    cd Harp-Seal-Checker
    code .
    ```
